@@ -1,4 +1,5 @@
 import random
+import argparse
 
 def sim():
     # setup: 3 options chosen at random
@@ -14,10 +15,15 @@ def sim():
     return { "stay": prize == choice, "switch": prize == switch}
 
 def main():
+    # get the number of time the simulation should run (defaults to 100)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--iterations", help="Number iterations of Monty Hall", type=int)
+    args = parser.parse_args()
+    num_iterations = args.iterations if args.iterations else 100
+
     # run the simulation n number of times
-    num_iterations = 100
     cummulative = { "stay": 0, "switch": 0 }
-    for i in range(0,100):
+    for i in range(0, num_iterations):
         result = sim()
         for key in cummulative.keys():
             cummulative[key] += result[key]
